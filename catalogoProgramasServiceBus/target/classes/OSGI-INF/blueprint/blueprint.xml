@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<blueprint
+        xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+        
+    <bean id="businessEntityService" class="com.sedesol.catProgramas.soap.dataService.BusinessEntityService" init-method="init" />
+	<bean id="businessCatalogService" class="com.sedesol.catProgramas.soap.dataService.CatalogsService" init-method="init" />
+
+    <camelContext xmlns="http://camel.apache.org/schema/blueprint" >
+    
+        <route id="saveEntity">
+            <from uri="direct-vm:saveEntity" />
+            <log message="saveEntity invocation with id: ${body}"/>
+            <bean method="saveEntity" ref="businessEntityService"/>
+            <to uri="direct-vm:saveJpaEntity" />
+        </route>
+        
+        <route id="insertEntity">
+            <from uri="direct-vm:insertEntity" />
+            <log message="insertEntity invocation with id: ${body}"/>
+            <bean method="insertEntity" ref="businessEntityService"/>
+            <to uri="direct-vm:insertJpaEntity" />
+        </route>
+        
+        <route id="deleteEntity">
+            <from uri="direct-vm:deleteEntity" />
+            <log message="deleteEntity invocation with id: ${body}"/>
+            <bean method="deleteEntity" ref="businessEntityService"/>
+        </route>
+        
+        <route id="getEntity">
+            <from uri="direct-vm:getEntity" />
+            <log message="getEntity invocation with id: ${body}"/>
+            <bean method="getEntity" ref="businessEntityService"/>
+            <to uri="direct-vm:getJpaEntity" />
+        </route>
+        
+        <route id="queryEntity">
+            <from uri="direct-vm:queryEntity" />
+            <log message="queryEntity invocation with id: ${body}"/>
+            <bean method="queryEntity" ref="businessEntityService"/>
+            <to uri="direct-vm:queryJpaEntity" />
+        </route>
+        
+        <route id="queryCatalog">
+            <from uri="direct-vm:queryCatalog" />
+            <log message="queryCatalog invocation with id: ${body}"/>
+            <bean method="queryCatalog" ref="businessCatalogService"/>
+            <to uri="direct-vm:queryJpaCatalog" />
+        </route>
+        
+        <route id="queryCatalogPaging">
+            <from uri="direct-vm:queryCatalogPaging" />
+            <log message="queryJpaCatalogPaging invocation with id: ${body}"/>
+            <bean method="queryCatalogPaging" ref="businessEntityService"/>
+            <to uri="direct-vm:queryJpaCatalogPaging" />
+        </route>
+    </camelContext>
+
+</blueprint>

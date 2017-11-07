@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<blueprint  default-activation="eager" 
+            xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:jpa="http://aries.apache.org/xmlns/jpa/v1.0.0"
+            xmlns:tx="http://aries.apache.org/xmlns/transactions/v1.0.0"
+			
+			xsi:schemaLocation="
+			http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0 
+			http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema-instance 
+			http://aries.apache.org/xmlns/jpa/v1.0.0 http://aries.apache.org/xmlns/jpa/v1.0.0 
+			http://aries.apache.org/xmlns/transactions/v1.0.0 http://aries.apache.org/xmlns/transactions/v1.0.0 ">
+
+  <bean id="dataEntityService" class="com.sedesol.catalogo.programas.model.dao.impl.DataEntityImpl"> 
+      <jpa:context unitname="person" property="entityManager"/>
+      <tx:transaction method="*" value="Required"/>
+  </bean>
+  
+  
+  <camelContext xmlns="http://camel.apache.org/schema/blueprint" >
+        <route id="saveEntity">
+            <from uri="direct-vm:saveJpaEntity" />
+            <log message="saveEntity JPA invocation with id: ${body}"/>
+            <bean method="saveEntityJpa" ref="dataEntityService"/>
+        </route>
+        
+        <route id="insertEntity">
+            <from uri="direct-vm:insertJpaEntity" />
+            <log message="insertEntityJpa JPA invocation with id: ${body}"/>
+            <bean method="insertEntityJpa" ref="dataEntityService"/>
+        </route>
+        
+        <route id="getEntity">
+            <from uri="direct-vm:getJpaEntity" />
+            <log message="getJpaEntity JPA invocation with id: ${body}"/>
+            <bean method="getJpaEntity" ref="dataEntityService"/>
+        </route>
+        
+        <route id="queryEntity">
+            <from uri="direct-vm:queryJpaEntity" />
+            <log message="queryJpaEntity JPA invocation with id: ${body}"/>
+            <bean method="queryJpaEntity" ref="dataEntityService"/>
+        </route>
+        <route id="queryCatalog">
+            <from uri="direct-vm:queryJpaCatalog" />
+            <log message="queryJpaCatalog JPA invocation with id: ${body}"/>
+            <bean method="queryJpaCatalog" ref="dataEntityService"/>
+        </route>
+        <route id="queryJpaCatalogPaging">
+            <from uri="direct-vm:queryJpaCatalogPaging" />
+            <log message="queryJpaCatalogPaging JPA invocation with id: ${body}"/>
+            <bean method="queryJpaCatalogPaging" ref="dataEntityService"/>
+        </route>
+  </camelContext>
+    
+  
+  
+  <service ref="dataEntityService" interface="com.sedesol.catalogo.programas.model.dao.DataEntity" />
+  
+</blueprint>

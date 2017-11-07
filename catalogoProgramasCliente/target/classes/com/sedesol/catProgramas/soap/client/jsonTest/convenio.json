@@ -1,0 +1,20 @@
+ {
+	"cscConvenio":"",
+	"chrFolioConvenio":"Folio Example 2",
+	"convenioDocumentos":
+		 [
+			 {
+			 "cscConvenioDoc":"",
+			 "chrNumeroFolioDoc":"Demo 1",
+			 "chrObservacionDoc":"Observacion 1",
+			 "fchDocumento":"12/12/1974"
+			 },
+			 {
+			 "cscConvenioDoc":"",
+			 "chrNumeroFolioDoc":"Demo 2",
+			 "chrObservacionDoc":"Observacion 2",
+			 "fchDocumento":"12/12/1974"
+			 }
+		 ]
+}
+

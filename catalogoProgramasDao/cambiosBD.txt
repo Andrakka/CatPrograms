@@ -1,0 +1,19 @@
+﻿Agregue el campo de sexo en la tabla Usuarios y cambié las llaves primarias de las tablas intermedias.
+El JPA ya se encuentra generado con esta versión de la BD, así que no debería haber problemas.
+
+28/01/2017
+
+Se agregó la tabla CONVENIO_DOCUMENTOS sustituyendo las tres tablas que había anteriormente que eran CONVENIO_ADDENDUM, etcétera.
+Además se eliminó la tabla intermedia ya que la relación es uno a muchos.
+Se agregó la tabla C_ESTATUS_RA la cual es un catálogo para el estatus del registro de adhesión.
+Se eliminó la tabla intermedia entre DATOS_CONTACTO_ENL_TECNICO y REGISTRO_ADHESION ya que la relación es uno a muchos y no muchos a muchos.
+
+
+Modifique el SCRIPT corrijiendo la Tabla CONVENIO_DOCUMENTOS y Agregando los FK 
+Se creo la tabla C_TIPO_DOCUMENTO 
+Se Elimino la tabla ADDENDUM
+
+
+Se eliminó la tabla TERMINACION_ANTICIPADA que era un documento del convenio que se me olvidó borrar
+Se agregó la tabla OBJETIVOS ESPECIALES que va relacionada con NORMATIVIDADPROGRAMA
+
